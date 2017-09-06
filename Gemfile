@@ -3,5 +3,6 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in oriented.gemspec
 gemspec
 
-gem 'orientdb', github: 'KYCK/orientdb-jruby', branch:'master'
-gem "codeclimate-test-reporter", group: :test, require: nil
+source 'https://Up97EjxiNexkaesDEnU1@gem.fury.io/me/' do
+  gem 'orientdb', '~> 1.7'
+end
