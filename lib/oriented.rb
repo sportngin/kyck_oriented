@@ -43,5 +43,11 @@ require_relative "oriented/edge/base_edge"
 require_relative "oriented/base_hook"
 
 module Oriented
-  # Your code goes here...
+  def self.logger
+    @logger ||= Logger.new($stdout)
+  end
+
+  def self.logger=(logger)
+    @logger = logger
+  end
 end

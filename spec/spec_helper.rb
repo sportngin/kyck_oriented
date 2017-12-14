@@ -10,8 +10,6 @@ RSpec.configure do |config|
   config.before(:each) do
     Oriented.connection
   end
-  
-  config.after(:each) do
-  end
 
+  config.include LoggerCapture
 end

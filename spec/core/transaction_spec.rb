@@ -14,9 +14,7 @@ module Oriented
           end
 
           it "rollbacks the transaction" do
-            @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
-            @conn_mock.should_receive(:connect)
             begin
               described_class.run  do
                 raise StandardError
@@ -25,11 +23,9 @@ module Oriented
               nil
             end
           end
-            
+
           it "raises the error" do
-            @conn_mock.stub(:close)
             @conn_mock.should_receive(:rollback)
-            @conn_mock.should_receive(:connect)
             raised = false
             begin
               described_class.run  do
@@ -40,25 +36,12 @@ module Oriented
             end
             raised.should be_true
           end
-
-          it "closes the connection" do
-            @conn_mock.stub(:rollback)
-            @conn_mock.should_receive(:connect)
-            begin
-              described_class.run  do
-                raise StandardError
-              end
-            rescue 
-              nil 
-            end
-
-          end
         end
 
         context "when options are passed" do
-       
+
           context "and commit_on_succes is true" do
-          
+
             it "commits the connection" do
               @conn_mock = double("connection")
               @conn_mock.should_receive(:commit)
