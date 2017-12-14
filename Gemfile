@@ -3,5 +3,4 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in oriented.gemspec
 gemspec
 
-gem 'orientdb', github: 'KYCK/orientdb-jruby', branch:'master'
-gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'orientdb', path: File.expand_path('../../kyck-orientdb-jruby', __FILE__)
