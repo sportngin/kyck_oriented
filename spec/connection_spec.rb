@@ -16,19 +16,19 @@ module Oriented
     context "when it's closed" do
 
       it "gets a new connection" do
-        Oriented.connection.close 
+        Oriented.connection.close
         Oriented.connection.java_connection.closed?.should be_false
       end
     end
 
     context "opening and reconnectiong" do
       it "works" do
-        100.times do 
-          Oriented.connection 
+        100.times do
+          Oriented.connection
           Oriented.connection.close
-          Oriented.connection 
+          Oriented.connection
           Oriented.connection.close
-          Oriented.connection 
+          Oriented.connection
           Oriented.connection.close
           Oriented.connection
           Oriented.connection.close
@@ -53,14 +53,13 @@ module Oriented
     end
 
     it "adds hooks to the connection" do
-      puts Oriented.connection.java_connection.hooks.count
       expect { Oriented.register_hook_class(BaseHook) }.to change {
         Oriented.connection.java_connection.hooks.count
       }.by(1)
     end
 
     it "adds only one hook to the connection" do
-      expect { 
+      expect {
         Oriented.register_hook_class(BaseHook)
         Oriented.register_hook_class(OtherHook)
         Oriented.register_hook_class(BaseHook)

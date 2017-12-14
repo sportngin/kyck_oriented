@@ -11,6 +11,10 @@ module Oriented
       connection.graph
     end
 
+    def outside_tx(&block)
+      graph.outside_tx(&block)
+    end
+
     def close_connection(force=false)
       @connection.close if @connection
       @connection =nil
@@ -100,25 +104,7 @@ module Oriented
     end
 
     def to_s
-      "Oriented Connection: url=#{@url}" 
-    end
-
-    def available_connections
-      Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global().getAvailableConnections(url, @user)
-    end
-
-    private
-
-    def acquire_java_connection
-      jdb = if @pooled
-              Java::ComOrientechnologiesOrientCoreDbDocument::ODatabaseDocumentPool.global(@min_pool, @max_pool).acquire(@url, @user, @pass);
-            else
-              db = OrientDB::GraphDatabase.new(@url)
-              db.open(@user, @pass)
-              db
-            end
-      Oriented.hook_classes.each {|h| jdb.register_hook(h.new)}
-      jdb
+      "Oriented Connection: url=#{@url}"
     end
 
   end
