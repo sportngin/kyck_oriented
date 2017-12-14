@@ -17,6 +17,7 @@ module Oriented
       let(:edge_class) {define_test_class(Edge)}
 
       let(:edge) { 
+        define_edge_type('knows')
         e = edge_class.new vertex, end_vertex, "knows"
         e.save
         e

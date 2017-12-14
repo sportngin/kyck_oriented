@@ -4,11 +4,12 @@ module Oriented
       let(:dummy_class) { define_test_class(Vertex)}
       let(:related_class) { define_test_class(Vertex)}
       let(:vertex) { v = dummy_class.new; v.save; v}
-      let(:rel_type) { RelType.new("spanks", dummy_class)}
       let(:other) {o= related_class.new; o.save; o}
-      subject {
-        vi = described_class.new(vertex, rel_type)
-      }
+      let(:rel_type) { RelType.new('spanks', dummy_class)}
+
+      before { define_edge_type('spanks') }
+
+      subject { described_class.new(vertex, rel_type) }
 
       describe "#create_relationship_to" do
         it "creates the relationship" do
@@ -22,7 +23,7 @@ module Oriented
           e = subject.create_relationship_to(other, {prop1: "val1"})
           e["prop1"].should == "val1"
         end
-       
+
         context "when a relationship has properties" do
           before(:each) do
             @rel_class = define_test_class(Edge)

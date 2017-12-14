@@ -7,7 +7,10 @@ module Oriented
     let(:edge_class) {define_test_class(Edge) } 
     let(:vertex) {vertex_class.create}
     let(:vertex2) {vertex_class.create}
-    let(:edge) {edge_class.create(vertex, vertex2, "test")}
+    let(:edge) {
+      define_edge_type('test')
+      edge_class.create(vertex, vertex2, "test")
+    }
 
     describe ".enable" do
       it "creates the identity map" do

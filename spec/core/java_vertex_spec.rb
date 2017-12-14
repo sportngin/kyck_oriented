@@ -34,8 +34,11 @@ module Oriented
       context "rels" do
         describe "._rels" do
           before(:each) do
+            define_edge_type('previous')
+            define_edge_type('blah')
+            define_edge_type('something')
             subject.add_edge("previous", other)
-            subject.add_edge("blah", other)            
+            subject.add_edge("blah", other)
             other.add_edge("something", subject)
           end
           it "should return the java edges" do
