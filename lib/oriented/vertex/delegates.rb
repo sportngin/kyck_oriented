@@ -29,11 +29,8 @@ module Oriented
         end
       end
       
-      # @macro  node.delegate
       delegate :[]=
-
-      # @macro  node.delegate
-      delegate :[], 'getProperty'
+      delegate :[]
       
       delegate :id, 'get_rid'   
 
