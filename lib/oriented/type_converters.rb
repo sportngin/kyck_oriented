@@ -162,9 +162,8 @@ module Oriented
         def to_ruby(value)
           return nil if value.nil?
           return value if value.class == Date
-          jv = value.getTime/1000 if value.class == Java::JavaUtil::Date
-          return nil if jv.nil?
-          t = Time.at(jv).utc.to_date
+          value = value.getTime/1000 if value.class == Java::JavaUtil::Date
+          Time.at(value).utc.to_date
         end
 
 
@@ -223,8 +222,8 @@ module Oriented
 
         def to_ruby(value)
           return nil if value.nil?
-          jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
-          t = Time.at(jv).utc
+          value = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          t = Time.at(value).utc
           DateTime.civil(t.year, t.month, t.day, t.hour, t.min, t.sec)
         end
 
@@ -256,8 +255,8 @@ module Oriented
 
         def to_ruby(value)
           return nil if value.nil?
-          jv = value.getTime/1000 if value.class == Java.JavaUtil::Date
-          Time.at(jv).utc
+          value = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          Time.at(value).utc
         end
 
         def index_as
@@ -274,12 +273,12 @@ module Oriented
         end
 
         def to_java(value)
-          return Set.new if value.nil?
-          value.to_java
+          return nil if value.nil?
+          Java::JavaUtil::HashSet.new(value.to_a)
         end
 
         def to_ruby(value)
-          value
+          Set.new(value.to_a)
         end
 
         def index_as
@@ -295,12 +294,12 @@ module Oriented
           [Hash, :hash, :embedded_map].include? clazz_or_symbol
         end
         def to_java(value)
-          return {} if value.nil? || value.empty?
-          value.to_java
+          return nil if value.nil? || value.empty?
+          value.stringify_keys.to_java
         end
 
         def to_ruby(value)
-          return {} if value.nil? || value.empty?
+          return nil if value.nil? || value.empty?
           value
         end
 

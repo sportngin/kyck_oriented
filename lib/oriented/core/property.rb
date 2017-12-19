@@ -6,7 +6,10 @@ module Oriented
     module Property
 
       # the valid values on a property, and arrays of those.
-      VALID_PROPERTY_VALUE_CLASSES = Set.new([Array, NilClass, String, Float, TrueClass, FalseClass, Fixnum, Time, Date, Java::JavaUtil::Date, Hash, ActiveSupport::HashWithIndifferentAccess, Symbol])
+      VALID_PROPERTY_VALUE_CLASSES = [Array, NilClass, String, Float, TrueClass, FalseClass,
+                                      Fixnum, Time, Date, Java::JavaUtil::Date, Hash,
+                                      ActiveSupport::HashWithIndifferentAccess,
+                                      Java::JavaUtil::Map, Java::JavaUtil::Set]
 
       # @return [Hash] all properties plus the id of the node with the key <tt>_neo_id</tt>
       def props
@@ -78,7 +81,7 @@ module Oriented
       # @param [Object] value the value we want to check if it's a valid neo4j property value
       # @return [True, False] A false means it can't be persisted.
       def valid_property?(value)
-        VALID_PROPERTY_VALUE_CLASSES.include?(value.class)
+        VALID_PROPERTY_VALUE_CLASSES.detect {|klass| value.is_a?(klass) }
       end
 
       # Sets the property of this node.

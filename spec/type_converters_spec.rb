@@ -26,12 +26,12 @@ module Oriented
 
        it "converts a Set" do
          set = Set.new([1,2,3])
-         Oriented::TypeConverters.convert(set).should == Set.new([ 1,2,3 ]).to_java
+         Oriented::TypeConverters.convert(set).should == Java::JavaUtil::HashSet.new([ 1,2,3 ])
        end
 
        it "converts a Hash" do
          set =  {a: 1, b: 2, c: 3}
-         Oriented::TypeConverters.convert(set).should == {a: 1, b:2, c:3}.to_java
+         Oriented::TypeConverters.convert(set).should == {a: 1, b:2, c:3}.stringify_keys.to_java
        end
     end
 

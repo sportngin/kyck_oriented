@@ -9,16 +9,11 @@ module Oriented
 
 
     def create
-      mergeprops = self.class.attribute_defaults.merge(self.props||{})      
-
-      java_obj = Oriented::Core::JavaVertex.new(mergeprops, "#{Oriented::Registry.odb_class_for(self.class.name.to_s)}")        
+      java_obj = Oriented::Core::JavaVertex.new(Oriented::Registry.odb_class_for(self.class.name.to_s))
       self.__java_obj = java_obj
-      self.write_changed_relationships      
-      # self.clear_relationships
+      write_all_attributes
+      write_changed_relationships
       true
-      # # wrapper.write_default_values
-      # # props.each_pair {|attr,val| wrapper.public_send("#{attr}=", val)} if props       
-      # wrapper
     end
 
     def update

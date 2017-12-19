@@ -31,7 +31,7 @@ module Oriented
       end
       
       # @macro  node.delegate
-      delegate :[]=, 'setProperty'
+      delegate :[]=
 
       # @macro  node.delegate
       delegate :[], 'getProperty'
