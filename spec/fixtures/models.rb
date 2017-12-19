@@ -54,11 +54,15 @@ module AllPropertyTypes
     end
     if types.empty? || types.include?(:date)
       property :date,        type: Date
-      property :date_dflt,   type: Date, default: Date.today
+      property :date_dflt,   type: Date, default: Time.now.utc.to_date
+    end
+    if types.empty? || types.include?(:datetime)
+      property :datetime,        type: DateTime
+      property :datetime_dflt,   type: DateTime, default: Time.now.utc.round.to_datetime
     end
     if types.empty? || types.include?(:time)
       property :time,        type: Time
-      property :time_dflt,   type: Time, default: Time.now.utc
+      property :time_dflt,   type: Time, default: Time.now.utc.round
     end
     if types.empty? || types.include?(:bool)
       property :bool,        type: :boolean

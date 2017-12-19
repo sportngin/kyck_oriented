@@ -15,13 +15,13 @@ module Oriented
        end
 
        it "converts a DateTime" do
-         dt = DateTime.new(2013, 12, 30)
-         Oriented::TypeConverters.convert(dt).should == dt.to_time
+         dt = Time.utc(2013, 12, 30).to_datetime
+         Oriented::TypeConverters.convert(dt).time.should == dt.to_time.to_i*1000
        end
 
        it "converts a Date" do
-         dt = Date.new(2013, 12, 30)
-         Oriented::TypeConverters.convert(dt).should == dt
+         dt = Time.utc(2013, 12, 30).to_date
+         Oriented::TypeConverters.convert(dt).time.should == dt.to_time.to_i*1000
        end
 
        it "converts a Set" do
@@ -47,7 +47,7 @@ module Oriented
     describe DateTimeConverter do
       describe ".to_ruby" do
         it "converts java to ruby" do
-          exp_dt = DateTime.new(2013, 12, 30)
+          exp_dt = Time.utc(2013, 12, 30).to_datetime
           dt = Java::JavaUtil::Date.new(exp_dt.to_time.to_i * 1000)
           DateTimeConverter.to_ruby(dt).should == exp_dt
         end
@@ -58,54 +58,55 @@ module Oriented
     describe DateConverter do
       describe ".to_ruby" do
         it "converts java to ruby" do
-          exp_dt = Date.new(2013, 12, 30)
+          exp_dt = Time.utc(2013, 12, 30).to_date
           dt = Java::JavaUtil::Date.new(exp_dt.to_time.to_i * 1000)
           DateConverter.to_ruby(dt).should == exp_dt
         end
       end
+
       describe '.to_java' do
         context "with 2 digit year" do
           it "converts a string with and 2 digit month slashes" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '01/07/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with slashes and 1-digit month/day" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '1/7/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with slashes" do
-            exp_dt = Date.new(2000, 12, 7)
+            exp_dt = Time.utc(2000, 12, 7).to_date
             dt = '12/7/00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with dashess" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '01-07-00'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
         end
         context "with 4 digit year" do
           it "converts a string with slashes" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '01/07/2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with dashess" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '01-07-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with dashess" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '1-7-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
           it "converts a string with dashess" do
-            exp_dt = Date.new(2000, 1, 7)
+            exp_dt = Time.utc(2000, 1, 7).to_date
             dt = '1-07-2000'
-            DateConverter.to_java(dt).should == exp_dt
+            DateConverter.to_java(dt).time.should == exp_dt.to_time.to_i*1000
           end
         end
       end

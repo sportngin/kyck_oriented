@@ -153,16 +153,16 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
-          return value if value.class == Java::JavaUtil::Date
-          value = parse_date_from_string(value) if value.class == String
-          # We should now have a date
-          Time.utc(value.year, value.month, value.day).to_date
+          return value if value.is_a? Java::JavaUtil::Date
+          value = parse_date_from_string(value) if value.is_a? String
+          sec   = value.to_time.utc.to_i
+          Java::JavaUtil::Date.new(sec*1000)
         end
 
         def to_ruby(value)
           return nil if value.nil?
-          return value if value.class == Date
-          value = value.getTime/1000 if value.class == Java::JavaUtil::Date
+          return value if value.is_a? Date
+          value = value.getTime/1000 if value.is_a? Java::JavaUtil::Date
           Time.at(value).utc.to_date
         end
 
@@ -213,18 +213,14 @@ module Oriented
         def to_java(value)
           return nil if value.nil?
           value = value.new_offset(0) if value.respond_to?(:new_offset)
-          if value.class == Date
-            Time.utc(value.year, value.month, value.day, 0, 0, 0)
-          else
-            Time.utc(value.year, value.month, value.day, value.hour, value.min, value.sec)
-          end
+          sec = value.to_time.utc.to_i
+          Java::JavaUtil::Date.new(sec*1000)
         end
 
         def to_ruby(value)
           return nil if value.nil?
-          value = value.getTime/1000 if value.class == Java.JavaUtil::Date
-          t = Time.at(value).utc
-          DateTime.civil(t.year, t.month, t.day, t.hour, t.min, t.sec)
+          value = value.getTime/1000 if value.is_a? Java.JavaUtil::Date
+          Time.at(value).utc.to_datetime
         end
 
         def index_as
@@ -245,17 +241,14 @@ module Oriented
         # Only utc times are supported !
         def to_java(value)
           return nil if value.nil?
-          if value.class == Date
-            Time.utc(value.year, value.month, value.day, 0, 0, 0)
-          else
-            value.utc
-          end
+          sec = value.to_time.utc.to_i
+          Java::JavaUtil::Date.new(sec*1000)
         end
 
 
         def to_ruby(value)
           return nil if value.nil?
-          value = value.getTime/1000 if value.class == Java.JavaUtil::Date
+          value = value.getTime/1000 if value.is_a? Java.JavaUtil::Date
           Time.at(value).utc
         end
 
@@ -274,7 +267,8 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
-          Java::JavaUtil::HashSet.new(value.to_a)
+          values = value.to_a.map {|v| v.is_a?(Symbol) && v.to_s || v }
+          Java::JavaUtil::HashSet.new(values)
         end
 
         def to_ruby(value)
