@@ -3,11 +3,11 @@ module Oriented
   module TypeConverters
     describe ".convert" do
        it "returns a default converter" do
-        Oriented::TypeConverters.convert("test").should == "test" 
+        Oriented::TypeConverters.convert("test").should == "test"
        end
 
        it "converts a symbol" do
-         Oriented::TypeConverters.convert(:test).should == "test" 
+         Oriented::TypeConverters.convert(:test).should == "test"
        end
 
        it "converts a Fixnum" do
@@ -36,13 +36,10 @@ module Oriented
     end
 
     describe ".converter" do
-     
       context "for a symbol" do
-
         it "returns a SymbolConverter" do
           Oriented::TypeConverters.converter(:symbol).should  == SymbolConverter
         end
-     
       end
     end
 

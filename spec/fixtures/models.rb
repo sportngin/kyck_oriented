@@ -21,7 +21,7 @@ class Stylist
   property :name
 
   has_n(:pieces_of_gossip)
-  has_one(:drug_dealer).from(:clients)  
+  has_one(:drug_dealer).from(:clients)
   has_n(:requests).from(:guru)
 end
 
