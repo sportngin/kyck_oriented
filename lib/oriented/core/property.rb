@@ -120,7 +120,7 @@ module Oriented
       end
 
       def has_property?(prop)
-        !!get_property(prop)
+        property_keys.include?(prop)
       end
       
     end
