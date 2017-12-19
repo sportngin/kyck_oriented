@@ -1,4 +1,5 @@
 require 'rspec'
+require 'pry'
 require_relative '../lib/oriented'
 require 'orientdb'
 require 'active_support'
