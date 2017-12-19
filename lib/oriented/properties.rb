@@ -158,9 +158,9 @@ module Oriented
     end
 
     def write_all_attributes
-      mergeprops = attribute_defaults.merge(changed_attributes)
-      mergeprops.each do |attribute, value|
-        write_attribute_with_conversion(attribute, value)
+      keys = attribute_defaults.keys + changed_attributes.keys
+      keys.each do |k|
+        write_attribute_with_conversion(k, read_attribute(k))
       end
     end
 
