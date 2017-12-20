@@ -55,20 +55,14 @@ module Oriented
     end
 
     # # Reload the object from the DB
-    # def reload(options = nil)
-    #   # Can't reload a none persisted node
-    #   return self if new_record?
-    #   clear_changes
-    #   clear_relationships
-    #   clear_composition_cache
-    #   reset_attributes
-    #   unless reload_from_database
-    #     set_deleted_properties
-    #     freeze
-    #   end
-    #   self
-    # end
-    # 
+    def reload(options = nil)
+      return self if new_record?
+      clear_changes
+      reset_attributes
+      __java_obj.record.reload
+      self
+    end
+
     # def freeze_if_deleted
     #   unless new_record?
     #     Neo4j::IdentityMap.remove_node_by_id(neo_id)

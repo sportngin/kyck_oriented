@@ -22,13 +22,14 @@ module Oriented
       # clear_relationships
       true
     end
-    
+
     def reload
-      # Can't reload a none persisted node
-      return self if new_record?      
-      clear_relationships  
-      reset_attributes      
-      self.__java_obj.record.reload    
+      return self if new_record?
+      clear_relationships
+      clear_changes
+      reset_attributes
+      __java_obj.record.reload
+      self
     end
 
     # # Reload the object from the DB
