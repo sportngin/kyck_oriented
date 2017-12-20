@@ -267,7 +267,7 @@ module Oriented
 
         def to_java(value)
           return nil if value.nil?
-          values = value.to_a.map {|v| v.is_a?(Symbol) && v.to_s || v }
+          values = Array(value).to_a.map {|v| v.is_a?(Symbol) && v.to_s || v }
           Java::JavaUtil::HashSet.new(values)
         end
 
