@@ -14,7 +14,7 @@ module Oriented
       # @return [Hash] all properties plus the id of the node with the key <tt>_neo_id</tt>
       def props
         ret = {"_orient_id" => orient_id}
-        property_keys.each do |key|
+        keys.each do |key|
           ret[key] = get_property(key)
         end
         ret
@@ -120,9 +120,12 @@ module Oriented
       end
 
       def has_property?(prop)
-        property_keys.include?(prop)
+        keys.include?(prop)
       end
-      
+
+      def keys
+        (%w[@rid @class @version] + property_keys)
+      end
     end
   end
 end

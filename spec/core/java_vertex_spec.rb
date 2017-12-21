@@ -20,6 +20,14 @@ module Oriented
         it "creates a java object" do
           subject.label.should == 'TestClass'
         end
+
+        it 'has @class, @rid, and @version properties' do
+          expect(subject.keys).to include(*%w[@class @rid @version])
+          expect(subject.props).to include(*%w[@class @rid @version])
+          expect(subject['@class']).to eql('TestClass')
+          expect(subject['@rid']).to_not be_nil
+          expect(subject['@version']).to_not be_nil
+        end
       end
 
       context "Core::Property" do
