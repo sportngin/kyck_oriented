@@ -81,8 +81,8 @@ module Oriented
         @graph = ConnectionFactory.instance.connection
         @java_connection = @graph.raw_graph
       end
-      
-      @java_connection.makeActive()
+      @graph.makeActive
+      @graph
     end
 
     def close(force = false)
