@@ -124,7 +124,7 @@ module Oriented
       end
 
       def keys
-        (%w[@rid @class @version] + property_keys)
+        (%w[@rid @class @version] + property_keys.to_a)
       end
     end
   end
